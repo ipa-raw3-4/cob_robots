@@ -33,5 +33,24 @@
       <origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
   </xacro:cob_ur10>
 
+  <!-- additional cover plane -->
+  <link name="cover">
+    <visual>
+      <geometry>
+        <box size="0.725 0.568 .02"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.725 0.568 .02"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_to_cover" type="fixed">
+       <parent link="base_link"/>
+       <child link="cover"/>
+       <origin xyz="-0.1475 0 0.48"/>
+  </joint>
+
 
 </robot>
