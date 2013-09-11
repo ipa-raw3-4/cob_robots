@@ -32,6 +32,12 @@
   <xacro:cob_ur10 name="arm" parent="base_link">
       <origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
   </xacro:cob_ur10>
+   <!-- mount the arm to the robot
+  <joint name="arm_base_joint" type="fixed" >
+      <origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
+      <parent link="base_link" />
+      <child link="arm_base_link" />
+  </joint>
 
   <!-- additional cover plane -->
   <link name="cover">
