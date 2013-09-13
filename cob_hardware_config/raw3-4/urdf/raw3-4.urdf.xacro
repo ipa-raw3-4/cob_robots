@@ -23,6 +23,8 @@
   <!-- ur_arm -->
   <include filename="$(find raw_description)/urdf/ur_arm/ur10_arm.urdf.xacro" />
 
+  <!-- robotiq gripper -->
+  <include filename="$(find robotiq_description)/urdf/s-model/s-model.urdf.xacro" />
 
   <xacro:raw_base name="base"/>
   <xacro:tower_asymetric name="tower" parent="base_link">
@@ -32,12 +34,6 @@
   <xacro:cob_ur10 name="arm" parent="base_link">
       <origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
   </xacro:cob_ur10>
-   <!-- mount the arm to the robot
-  <joint name="arm_base_joint" type="fixed" >
-      <origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
-      <parent link="base_link" />
-      <child link="arm_base_link" />
-  </joint>
 
   <!-- additional cover plane -->
   <link name="cover">
@@ -45,6 +41,9 @@
       <geometry>
         <box size="0.725 0.568 .02"/>
       </geometry>
+      <material name="grey">
+  	<color rgba="0.8 0.8 0.8 1"/>
+      </material>
     </visual>
     <collision>
       <geometry>
@@ -57,6 +56,22 @@
        <child link="cover"/>
        <origin xyz="-0.1475 0 0.48"/>
   </joint>
+  
+  <link name="quick_changer_link"/>
+  <joint name="changer_to_ee" type="fixed">
+       <parent link="arm_ee_link"/>
+       <child link="quick_changer_link"/>
+       <origin xyz="0.04 0 0" rpy="1.57 -0.45 1.57"/>
+  </joint>
 
+  <link name="tool_cam_link"/>
+  <joint name="cam_to_changer" type="fixed">
+       <parent link="quick_changer_link"/>
+       <child link="tool_cam_link"/>
+       <origin xyz="0 0 0.095" rpy="0.0 0.0 0.0"/>
+  </joint>
+  <!--xacro:s-model_mesh prefix="gripper" parent="arm_ee_link">
+       <origin xyz="0.15 0 0" rpy="1.57 0.0 1.57"/>
+  </xacro:s-model_mesh-->
 
 </robot>
